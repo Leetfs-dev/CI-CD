@@ -7,10 +7,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # 第八步：获取预览链接并发送到 PR
+      - name: 使用 GitHub App 进行身份验证
+        id: auth
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_SECRET }}
+          owner: ${{ github.repository_owner }}
+      # 获取预览链接并发送到 PR
       - name: 评论 PR 部署链接
         uses: actions/github-script@v6
         with:
+          github-token: ${{ steps.auth.outputs.token }}
           script: |
             const prNumber = context.payload.pull_request.number;
             const previewUrl = `${{ steps.deploy.outputs.url }}`;
