@@ -55,7 +55,7 @@ jobs:
                 repo: context.repo.repo,
                 pull_number: prNumber,
                 body: reviewBody,
-                event: comment,
+                event: "comment",
               });
             }
 
