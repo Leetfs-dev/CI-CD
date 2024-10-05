@@ -55,7 +55,7 @@ jobs:
                 repo: context.repo.repo,
                 pull_number: prNumber,
                 body: reviewBody,
-                event: 'comment',  // 仅作为评论，不进行 approve 或 request_changes
+                event: comment,
               });
             }
 
