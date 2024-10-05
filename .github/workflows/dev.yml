@@ -1,0 +1,20 @@
+name: 发包到 NPM
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+
+jobs:
+  release:
+    runs-on: ubuntu-latest  # 使用最新的 Ubuntu 作为运行环境
+    if: '!(( github.ref == ''refs/heads/main'' ) && contains(github.event.head_commit.message, ''release''))'
+    steps:
+
+      - name: 使用 GitHub App 进行身份验证
+        id: auth
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_APP_SECRET }}
+          owner: ${{ github.repository_owner }}
